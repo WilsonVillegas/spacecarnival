@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour {
 	
 	// Player Handling
 	public float gravity = 20;
-	public float speed = 8;
+	public float walkSpeed = 8;
+	public float runSpeed = 12;
 	public float acceleration = 30;
 	public float jumpHeight = 12;
 	
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Animation shenanigans
 	private Animator animator;
+	private float animationSpeed;
 	private float vertical;
 	private float horizontal;
 	private Vector3 pScale;
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		// Input
+		float speed = (Input.GetButton("Run"))?runSpeed:walkSpeed;
 		vertical = Input.GetAxis ("Vertical");
 		horizontal = Input.GetAxis ("Horizontal");
 		targetSpeed = Input.GetAxisRaw("Horizontal") * speed;
@@ -54,14 +57,14 @@ public class PlayerController : MonoBehaviour {
 		if(horizontal > 0)
 		{
 			animator.SetInteger("State", 1);
-			pScale.x = Mathf.Abs(pScale.x);
-			transform.localScale = pScale;
+			//pScale.x = Mathf.Abs(pScale.x);
+			//transform.localScale = pScale;
 		}
 		else if(horizontal < 0)
 		{
 			animator.SetInteger("State", 1);
-			pScale.x = Mathf.Abs(pScale.x)*-1;
-			transform.localScale = pScale;
+			//pScale.x = Mathf.Abs(pScale.x)*-1;
+			//transform.localScale = pScale;
 		}
 		else
 		{
@@ -72,6 +75,12 @@ public class PlayerController : MonoBehaviour {
 		amountToMove.x = currentSpeed;
 		amountToMove.y -= gravity * Time.deltaTime;
 		playerPhysics.Move(amountToMove * Time.deltaTime);
+
+		//Face
+		if(horizontal != 0)
+		{
+			transform.eulerAngles = (horizontal>0)?Vector3.zero:Vector3.up * 180;
+		}
 	}
 	
 	// Increase n towards target by speed
@@ -85,4 +94,6 @@ public class PlayerController : MonoBehaviour {
 			return (dir == Mathf.Sign(target-n))? n: target; // if n has now passed target then return target, otherwise return n
 		}
 	}
+
+
 }

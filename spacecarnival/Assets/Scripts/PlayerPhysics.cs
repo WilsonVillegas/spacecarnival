@@ -11,6 +11,10 @@ public class PlayerPhysics : MonoBehaviour {
 	private Vector3 s;
 	private Vector3 c;
 	
+	private Vector3 originalSize;
+	private Vector3 originalCentre;
+	private float colliderScale;
+	
 	private int collisionDivisionsX = 3;
 	private int collisionDivisionsY =10;
 	
@@ -26,8 +30,11 @@ public class PlayerPhysics : MonoBehaviour {
 	
 	void Start() {
 		collider = GetComponent<BoxCollider>();
-		s = collider.size;
-		c = collider.center;
+		colliderScale = transform.localScale.x;
+		
+		originalSize = collider.size;
+		originalCentre = collider.center;
+		SetCollider(originalSize,originalCentre);
 	}
 	
 	public void Move(Vector2 moveAmount) {
@@ -112,13 +119,13 @@ public class PlayerPhysics : MonoBehaviour {
 		transform.Translate(finalTransform,Space.World);
 	}
 	
-//	// Set collider
-//	public void SetCollider(Vector3 size, Vector3 centre) {
-//		collider.size = size;
-//		collider.center = centre;
-//		
-//		s = size * colliderScale;
-//		c = centre * colliderScale;
-//	}
+	// Set collider
+	public void SetCollider(Vector3 size, Vector3 centre) {
+		collider.size = size;
+		collider.center = centre;
+		
+		s = size * colliderScale;
+		c = centre * colliderScale;
+	}
 	
 }
