@@ -13,12 +13,19 @@ public class PlayerController : MonoBehaviour {
 	private float currentSpeed;
 	private float targetSpeed;
 	private Vector2 amountToMove;
-	
+
 	private PlayerPhysics playerPhysics;
-	
-	
+
+	// Animation shenanigans
+	private Animator animator;
+	private float vertical;
+	private float horizontal;
+	private Vector3 pScale;
+
 	void Start () {
 		playerPhysics = GetComponent<PlayerPhysics>();
+		animator = GetComponent<Animator>();
+		pScale = transform.localScale;
 	}
 	
 	void Update () {
@@ -39,8 +46,27 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		// Input
+		vertical = Input.GetAxis ("Vertical");
+		horizontal = Input.GetAxis ("Horizontal");
 		targetSpeed = Input.GetAxisRaw("Horizontal") * speed;
 		currentSpeed = MoveTo(currentSpeed, targetSpeed,acceleration);
+
+		if(horizontal > 0)
+		{
+			animator.SetInteger("State", 1);
+			pScale.x = Mathf.Abs(pScale.x);
+			transform.localScale = pScale;
+		}
+		else if(horizontal < 0)
+		{
+			animator.SetInteger("State", 1);
+			pScale.x = Mathf.Abs(pScale.x)*-1;
+			transform.localScale = pScale;
+		}
+		else
+		{
+			animator.SetInteger("State", 0);
+		}
 		
 		// Set amount to move
 		amountToMove.x = currentSpeed;
