@@ -12,8 +12,10 @@ public class PlayerController : MonoBehaviour {
 	public float jumpHeight = 12;
 	
 	private float currentSpeed;
+	private float currentVerticalSpeed;
 	private float targetSpeed;
-	private Vector2 amountToMove;
+	private float targetVerticalSpeed;
+	private Vector3 amountToMove;
 
 	private PlayerPhysics playerPhysics;
 
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour {
 	private Animator animator;
 	private float animationSpeed;
 	private float vertical;
+	private float verticalRaw;
 	private float horizontal;
 	private Vector3 pScale;
 
@@ -50,6 +53,9 @@ public class PlayerController : MonoBehaviour {
 		// Input
 		float speed = (Input.GetButton("Run"))?runSpeed:walkSpeed;
 		vertical = Input.GetAxis ("Vertical");
+		verticalRaw = Input.GetAxisRaw ("Vertical");
+		targetVerticalSpeed = verticalRaw * speed;
+		currentVerticalSpeed = MoveTo(currentVerticalSpeed, targetVerticalSpeed, acceleration);
 		horizontal = Input.GetAxis ("Horizontal");
 		targetSpeed = Input.GetAxisRaw("Horizontal") * speed;
 		currentSpeed = MoveTo(currentSpeed, targetSpeed,acceleration);
@@ -74,6 +80,7 @@ public class PlayerController : MonoBehaviour {
 		// Set amount to move
 		amountToMove.x = currentSpeed;
 		amountToMove.y -= gravity * Time.deltaTime;
+		amountToMove.z = currentVerticalSpeed;
 		playerPhysics.Move(amountToMove * Time.deltaTime);
 
 		//Face

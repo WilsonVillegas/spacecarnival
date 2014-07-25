@@ -37,11 +37,12 @@ public class PlayerPhysics : MonoBehaviour {
 		SetCollider(originalSize,originalCentre);
 	}
 	
-	public void Move(Vector2 moveAmount) {
+	public void Move(Vector3 moveAmount) {
 		
 		float deltaY = moveAmount.y;
 		float deltaX = moveAmount.x;
-		Vector2 p = transform.position;
+		float deltaZ = moveAmount.z;
+		Vector3 p = transform.position;
 		
 		// Check collisions above and below
 		grounded = false;
@@ -103,7 +104,7 @@ public class PlayerPhysics : MonoBehaviour {
 		}
 		
 		if (!grounded && !movementStopped) {
-			Vector3 playerDir = new Vector3(deltaX,deltaY);
+			Vector3 playerDir = new Vector3(deltaX,deltaY, deltaZ);
 			Vector3 o = new Vector3(p.x + c.x + s.x/2 * Mathf.Sign(deltaX),p.y + c.y + s.y/2 * Mathf.Sign(deltaY));
 			ray = new Ray(o,playerDir.normalized);
 			
@@ -114,7 +115,7 @@ public class PlayerPhysics : MonoBehaviour {
 		}
 		
 		
-		Vector2 finalTransform = new Vector2(deltaX,deltaY);
+		Vector3 finalTransform = new Vector3(deltaX,deltaY,deltaZ);
 		
 		transform.Translate(finalTransform,Space.World);
 	}
