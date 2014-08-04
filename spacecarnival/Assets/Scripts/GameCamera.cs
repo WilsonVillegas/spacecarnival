@@ -4,7 +4,8 @@ using System.Collections;
 public class GameCamera : MonoBehaviour 
 {
 	private Transform target;
-	private float trackingSpeed = 4;
+	public float trackingSpeed;
+	public float trackingHeight;
 
 	public void SetTarget(Transform t)
 	{
@@ -16,7 +17,7 @@ public class GameCamera : MonoBehaviour
 		if (target)
 		{
 			float x = Accelerate (transform.position.x, target.position.x, trackingSpeed);
-			float y = Accelerate (transform.position.y, target.position.y, trackingSpeed);
+			float y = Accelerate (transform.position.y, target.position.y + trackingHeight, trackingSpeed);
 			transform.position = new Vector3(x, y, transform.position.z);
 		}
 	}

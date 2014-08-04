@@ -27,10 +27,14 @@ public class PlayerController : MonoBehaviour {
 	private float horizontal;
 	private Vector3 pScale;
 
+	[HideInInspector]
+	public bool playerMoving;
+
 	void Start () {
 		playerPhysics = GetComponent<PlayerPhysics>();
 		animator = GetComponent<Animator>();
 		pScale = transform.localScale;
+		playerMoving = false;
 	}
 	
 	void Update () {
@@ -63,17 +67,20 @@ public class PlayerController : MonoBehaviour {
 		if(horizontal > 0)
 		{
 			animator.SetInteger("State", 1);
+			playerMoving = true;
 			//pScale.x = Mathf.Abs(pScale.x);
 			//transform.localScale = pScale;
 		}
 		else if(horizontal < 0)
 		{
 			animator.SetInteger("State", 1);
+			playerMoving = true;
 			//pScale.x = Mathf.Abs(pScale.x)*-1;
 			//transform.localScale = pScale;
 		}
 		else
 		{
+			playerMoving = false;
 			animator.SetInteger("State", 0);
 		}
 		
