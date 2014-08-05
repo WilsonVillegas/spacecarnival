@@ -33,7 +33,7 @@ public class Parallax : MonoBehaviour {
 		{
 			//n gets faster or slower, whichever goes closer to target speed
 			float dir = Mathf.Sign(target - n);
-			n += a * Time.deltaTime * dir;
+			n += 1000 * Time.deltaTime * dir;
 			//If n has passed the target, return the target speed, otherwise return n
 			return (dir == Mathf.Sign (target-n))? n: target;
 		}
