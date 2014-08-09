@@ -100,7 +100,7 @@ MonoBehaviour:
   gravity: 20
   walkSpeed: 4
   runSpeed: 4
-  acceleration: 30
+  acceleration: 100
   jumpHeight: 12
   playerMoving: 0
 --- !u!114 &11400002
