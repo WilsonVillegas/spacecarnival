@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour {
 		amountToMove.x = currentSpeed;
 		amountToMove.y -= gravity * Time.deltaTime;
 		amountToMove.z = currentVerticalSpeed;
+		//transform.Translate (amountToMove * Time.deltaTime, Space.World);
 		playerPhysics.Move(amountToMove * Time.deltaTime);
 
 		//Face
