@@ -82,9 +82,10 @@ public class PlayerPhysics : MonoBehaviour {
 		for (int i = 0; i<collisionDivisionsY; i ++) {
 			float dir = Mathf.Sign(deltaX);
 			float x = p.x + c.x + s.x/2 * dir;
+			float z = p.z + c.z + s.z/2 * dir;
 			float y = p.y + c.y - s.y/2 + s.y/(collisionDivisionsY-1) * i;
 			
-			ray = new Ray(new Vector2(x,y), new Vector2(dir,0));
+			ray = new Ray(new Vector3(x,y,z), new Vector2(dir,0));
 			Debug.DrawRay(ray.origin,ray.direction);
 			
 			if (Physics.Raycast(ray,out hit,Mathf.Abs(deltaX) + skin,collisionMask)) {
